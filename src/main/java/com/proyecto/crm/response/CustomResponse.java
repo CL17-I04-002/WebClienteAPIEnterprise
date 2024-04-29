@@ -1,0 +1,18 @@
+package com.proyecto.crm.response;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.List;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class CustomResponse {
+    private int statusCode;
+    private String message;
+    private List<?> lstValue;
+}
