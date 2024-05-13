@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:fragment="head">
+    <meta charset="utf-8" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Simple Sidebar - Start Bootstrap Template</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" th:href="@{/assets/favicon.ico}" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
+    <!-- Bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+            integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    />
+</head>
+<body>
+<div class="d-flex" id="wrapper">
+    <!-- Sidebar-->
+    <div class="border-end bg-white" id="sidebar-wrapper">
+        <div class="sidebar-heading border-bottom bg-dark text-light">CRM</div>
+        <div id="transactor-link" class="list-group list-group-flush">
+            <a id="submenu-transactor" class="list-group-item list-group-item-action list-group-item-light p-3 open-modal-transactor submenu">Transactor</a>
+            <div class="sub-menu" style="display: none;">
+                <a th:href="@{/workstation}" class="list-group-item list-group-item-action list-group-item-light p-3">Workstation</a>
+                <a th:href="@{/transactorSecurity}" class="list-group-item list-group-item-action list-group-item-light p-3">Transactor Security</a>
+                <a th:href="@{/resetPairKey}" class="list-group-item list-group-item-action list-group-item-light p-3">Resetear par de llaves</a>
+                <a th:href="@{/crearApiKey}" class="list-group-item list-group-item-action list-group-item-light p-3">Crear API Key</a>
+                <a th:href="@{/transaccionEstado}" class="list-group-item list-group-item-action list-group-item-light p-3">Transaccion Estado</a>
+                <a th:href="@{/transaccionTipo}" class="list-group-item list-group-item-action list-group-item-light p-3">Transaccion Tipo</a>
+            </div>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3 submenu" href="#!">BTDP</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3 submenu" href="#!">LINDP</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3 submenu" href="#!">CAUTOS</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3 submenu" href="#!">NAYAXS</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3 submenu" href="#!">VTEX</a>
+        </div>
+    </div>
+    <!-- Page content wrapper-->
+    <div id="page-content-wrapper">
+        <!-- Top navigation-->
+        <nav
+                class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <button class="btn btn-success d-block d-md-none" id="sidebarToggle">Toggle
+                    Menu</button>
+                <button class="navbar-toggler" type="button"
+                        data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+                        <li class="nav-item">
+                            <span th:text="${principal}" class="nav-link"></span>
+                        </li>
+                        <li class="nav-item">
+                            <form th:action="@{/logout}" method="post" id="logoutForm" class="form-inline">
+                                <!--<span class="nav-link" onclick="confirmLogout()">Cerrar Sesión</span>-->
+                                <button class="btn btn-outline-light" type="button" onclick="confirmLogout()">Cerrar Sesión</button>
+                                <!--<button class="dropdown-item btn btn-link" type="button" onclick="confirmLogout()">Cerrar Sesión</button>-->
+                            </form>
+                        </li>
+                        <!--<li class="nav-item">
+                            <form th:action="@{/logout}" method="post" id="logoutForm" class="form-inline">
+                                <button class="dropdown-item btn btn-link" type="button" onclick="confirmLogout()">Cerrar Sesión</button>
+                            </form>
+                        </li>-->
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Modal de API Key -->
+        <div class="modal fade" id="apiKeyModal" tabindex="-1" role="dialog" aria-labelledby="apiKeyModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="apiKeyModalLabel">API Key</h5>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form method="POST" th:action="@{/confirmApiKey}" id="apiKeyForm">
+                        <div class="modal-body">
+                            <p>Por favor ingrese su API Key</p>
+                            <input type="text" name="apiKey" id="apiKeyId" style="width: 90%;">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary" name="id">Enviar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- CONTENIDO DINAMICO -->
+        <div class="container-fluid" layout:fragment="page-content">
+
+
+        </div>
+    </div>
+</div>
+<!-- jQuery -->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>-->
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<!-- CUSTOM JS-->
+<!--<script th:src="@{/js/scripts.js}"></script>-->
+<!--<script th:src="@{/js/ModalApiTransactor.js}"></script>-->
+<!--<script th:src="@{/js/Submenu.js}"></script> -->
+<script th:src="@{/js/validateApiKey.js}"></script>
+<script th:src="@{/js/slideToggle.js}"></script>
+
+<!--OTRO SCRIPTS PARA PAGINAS-->
+<script>
+        function confirmLogout() {
+            var confirmacion = confirm("¿Estás seguro de que deseas cerrar sesión?");
+
+            if (confirmacion) {
+                document.getElementById('logoutForm').submit();
+            }
+        }
+    </script>
+
+
+
+<!--OTRO SCRIPTS PARA PAGINAS-->
+<!--<th:block layout:fragment="page-scripts">
+
+</th:block>-->
+</body>
+</html>

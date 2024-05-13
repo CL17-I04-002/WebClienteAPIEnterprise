@@ -1,0 +1,9 @@
+body{
+            background: #ffe259;
+            background: linear-gradient(to right, #ffa751, #ffe259);
+        }
+.bg{
+            background-image: url(/img/serfinsa.png);
+            background-size: cover;
+            background-position: center center;
+        }

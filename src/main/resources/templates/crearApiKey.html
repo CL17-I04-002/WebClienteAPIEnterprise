@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{navbar}">
+<head th:replace="navbar :: head">
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link th:href="@{/css/apiKey.css}" rel="stylesheet" />
+</head>
+<body>
+<div class="container py-3" layout:fragment="page-content">
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+            <h1 class="text-center">Registro de API Key</h1>
+            <div class="card-body">
+                <div th:if="${param.exito}">
+                    <div class="alert alert-info">
+                        <span th:text="${showApiKey}"></span>
+                    </div>
+                </div>
+                <div th:if="${param.error}">
+                    <div class="alert alert-danger">
+                        <span th:text="${errorApiKey}"></span>
+                    </div>
+                </div>
+                <form th:action="@{/crearApiKey}" method="post" th:object="${apiKey}">
+                    <div class="form-group">
+                        <label>Service Name</label>
+                        <input type="text" th:field="${apiKey.service}" class="form-control" autofocus>
+                    </div>
+                    <div class="d-flex justify-content-between py-2">
+                        <button class="btn btn-primary col-sm-2 col-md-4 col-lg-4 col-xl-4 mx-2">Guardar</button>
+                        <button class="btn btn-danger col-sm-2 col-md-4 col-lg-4 col-xl-4 mx-2">Limpiar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+</body>
+</html>
