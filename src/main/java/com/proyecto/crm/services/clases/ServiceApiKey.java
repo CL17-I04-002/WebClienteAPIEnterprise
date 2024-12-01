@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 
+import java.util.Collections;
+
 /**
  * @author : Daniel Larin
  * @version : 1.0
@@ -50,6 +52,29 @@ public class ServiceApiKey implements IServiceApiKey {
             if(response.getStatusCode().is2xxSuccessful()){
                 customResponse.setStatusCode(200);
                 customResponse.setMessage(response.getBody());
+            }
+            return customResponse;
+        } catch (HttpClientErrorException e) {
+            return CustomExceptionResponse.getResponseException(500 ,"Client error communicating with API: " + e.getMessage(), null);
+        } catch (HttpServerErrorException e) {
+            return CustomExceptionResponse.getResponseException(500 ,"Server error when communicating with the API: " + e.getMessage(), null);
+        } catch (Exception e){
+            return CustomExceptionResponse.getResponseException(500 ,"An unexpected error occurred while obtaining the API Key", null);
+        }
+    }
+
+    @Override
+    public CustomResponse validateApiKey(String apiKey) {
+        CustomResponse customResponse = new CustomResponse();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> request= new HttpEntity<>(apiKey,headers);
+        try{
+            ResponseEntity<String> response = responseServer.setParameters("serviceApiKey/validate", HttpMethod.POST, request, String.class);
+            if(response.getStatusCode().is2xxSuccessful()){
+                customResponse.setStatusCode(200);
+                customResponse.setMessage("API Key validada correctamente");
+                customResponse.setLstValue(Collections.emptyList());
             }
             return customResponse;
         } catch (HttpClientErrorException e) {

@@ -29,20 +29,22 @@
     <div class="border-end bg-white" id="sidebar-wrapper">
         <div class="sidebar-heading border-bottom bg-dark text-light">CRM</div>
         <div id="transactor-link" class="list-group list-group-flush">
-            <a id="submenu-transactor" class="list-group-item list-group-item-action list-group-item-light p-3 open-modal-transactor submenu">Transactor</a>
-            <div class="sub-menu" style="display: none;">
-                <a th:href="@{/workstation}" class="list-group-item list-group-item-action list-group-item-light p-3">Workstation</a>
+            <!--<a id="submenu-transactor" class="list-group-item list-group-item-action list-group-item-light p-3 open-modal-transactor submenu">Transactor</a>-->
+            <div class="sub-menu">
+                <a th:href="@{/enterprise}" data-redirect-url="/enterprise"
+                   class="list-group-item list-group-item-action list-group-item-light p-3"
+                   onclick="setRedirectUrl(this)">Enterprise</a>
                 <a th:href="@{/transactorSecurity}" class="list-group-item list-group-item-action list-group-item-light p-3">Transactor Security</a>
                 <a th:href="@{/resetPairKey}" class="list-group-item list-group-item-action list-group-item-light p-3">Resetear par de llaves</a>
                 <a th:href="@{/crearApiKey}" class="list-group-item list-group-item-action list-group-item-light p-3">Crear API Key</a>
                 <a th:href="@{/transaccionEstado}" class="list-group-item list-group-item-action list-group-item-light p-3">Transaccion Estado</a>
                 <a th:href="@{/transaccionTipo}" class="list-group-item list-group-item-action list-group-item-light p-3">Transaccion Tipo</a>
             </div>
-            <a class="list-group-item list-group-item-action list-group-item-light p-3 submenu" href="#!">BTDP</a>
+            <!--<a class="list-group-item list-group-item-action list-group-item-light p-3 submenu" href="#!">BTDP</a>
             <a class="list-group-item list-group-item-action list-group-item-light p-3 submenu" href="#!">LINDP</a>
             <a class="list-group-item list-group-item-action list-group-item-light p-3 submenu" href="#!">CAUTOS</a>
             <a class="list-group-item list-group-item-action list-group-item-light p-3 submenu" href="#!">NAYAXS</a>
-            <a class="list-group-item list-group-item-action list-group-item-light p-3 submenu" href="#!">VTEX</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3 submenu" href="#!">VTEX</a>-->
         </div>
     </div>
     <!-- Page content wrapper-->
@@ -90,10 +92,11 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form method="POST" th:action="@{/confirmApiKey}" id="apiKeyForm">
+                    <form method="POST" th:action="@{/confirmApiKey}" th:object="${apiKeyValidate}" id="apiKeyForm">
+                        <input type="hidden" name="redirectUrl" id="redirectUrl" />
                         <div class="modal-body">
-                            <p>Por favor ingrese su API Key</p>
-                            <input type="text" name="apiKey" id="apiKeyId" style="width: 90%;">
+                            <p>Por favor ingrese API Key</p>
+                            <input type="text" th:field="*{apiKey}" name="apiKey" id="apiKeyId" style="width: 90%;" required>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -120,6 +123,8 @@
 <!--<script th:src="@{/js/Submenu.js}"></script> -->
 <script th:src="@{/js/validateApiKey.js}"></script>
 <script th:src="@{/js/slideToggle.js}"></script>
+<script th:src="@{/js/redirectUrl.js}"></script>
+<script th:src="@{/js/storeApiKey.js}"></script>
 
 <!--OTRO SCRIPTS PARA PAGINAS-->
 <script>
