@@ -82,6 +82,12 @@
                 </div>
             </div>
         </nav>
+        <div th:if="${param.error}" class="alert alert-danger d-flex align-items-center" role="alert">
+            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+            <div>
+                API Key invalida
+            </div>
+        </div>
         <!-- Modal de API Key -->
         <div class="modal fade" id="apiKeyModal" tabindex="-1" role="dialog" aria-labelledby="apiKeyModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">

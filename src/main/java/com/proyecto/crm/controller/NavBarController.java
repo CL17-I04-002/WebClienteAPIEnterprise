@@ -35,14 +35,20 @@ public class NavBarController {
                                  HttpServletRequest httpRequest){
         CustomResponse response = serviceApiKey.validateApiKey(serviceApiKeyEntity.getApiKey());
         String baseUrl = httpRequest.getRequestURL().toString();
-        baseUrl = baseUrl.substring(0, baseUrl.indexOf(httpRequest.getRequestURI()));
+
         if(response.getStatusCode() == 200){
             System.out.println("API Key validada correctamente");
+            baseUrl = baseUrl.substring(0, baseUrl.indexOf(httpRequest.getRequestURI()));
             httpRequest.getSession().setAttribute("apiKey", serviceApiKeyEntity.getApiKey());
             String finalUrl = baseUrl + redirectUrl + "?apiKey=" + serviceApiKeyEntity.getApiKey();
             return "redirect:" + finalUrl;
 
-        } else {
+        } else if(response.getStatusCode() == 404){
+            System.out.println("API Key no encontrada");
+            baseUrl = httpRequest.getRequestURL().toString().concat("?error");
+            return "redirect:" + baseUrl;
+        }
+        else {
             System.out.println("API Key incorrecta");
             return "redirect:/confirmApiKey?ok";
         }

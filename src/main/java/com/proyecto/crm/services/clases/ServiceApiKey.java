@@ -75,6 +75,9 @@ public class ServiceApiKey implements IServiceApiKey {
                 customResponse.setStatusCode(200);
                 customResponse.setMessage("API Key validada correctamente");
                 customResponse.setLstValue(Collections.emptyList());
+            } else if(response.getStatusCode() == HttpStatus.NOT_FOUND){
+                customResponse.setStatusCode(404);
+                customResponse.setMessage("API KEY no encontrada");
             }
             return customResponse;
         } catch (HttpClientErrorException e) {

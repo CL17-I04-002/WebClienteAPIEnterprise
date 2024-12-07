@@ -6,6 +6,7 @@ import com.proyecto.crm.response.CustomResponse;
 import com.proyecto.crm.response.ResponseServer;
 import com.proyecto.crm.services.interfaces.IServiceEnterprise;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
@@ -27,10 +28,10 @@ public class ServiceEnterprise implements IServiceEnterprise {
         CustomResponse customResponse = new CustomResponse();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("Authorization", ApiKey);
+        headers.set("X-API-KEY", ApiKey);
         HttpEntity<List<Enterprise>> request =new HttpEntity<>(headers);
         try {
-            ResponseEntity<List<Enterprise>> response = responseServer.setParameters("enterprise", HttpMethod.GET, request, Void.class);
+            ResponseEntity<List<Enterprise>> response = responseServer.setParameters("enterprise", HttpMethod.GET, request, new ParameterizedTypeReference<List<Enterprise>>() {});
             if(response.getStatusCode().is2xxSuccessful()){
                 customResponse.setStatusCode(200);
                 customResponse.setMessage("OK");
