@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{navbar}">
+<head th:replace="navbar :: head">
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<div class="container py-3" layout:fragment="page-content">
+  <div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+      <div>
+        <i class="fa fa-undo" aria-hidden="true"></i>
+      </div>
+      <h1 class="text-center">Writing down API KEY</h1>
+      <div class="card-body">
+        <div th:if="${param.apiKey}">
+          <div class="alert alert-info">
+            <span>AP Key Valida</span>
+          </div>
+        </div>
+        <div th:if="${param.error}">
+          <div class="alert alert-error">
+            <span>API Key Invalida</span>
+          </div>
+        </div>
+        <form method="POST" th:action="@{/index}" th:object="${apiKeyValidate}" id="apiKeyForm">
+          <input type="hidden" name="redirectUrl" id="redirectUrl" />
+          <div class="modal-body">
+            <p>Por favor ingrese API Key</p>
+            <input type="text" th:field="*{apiKey}" name="apiKey" id="apiKeyId" style="width: 90%;" required>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary" name="id">Enviar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
+<script th:src="@{/js/storeApiKey.js}"></script>
+</body>
+</html>

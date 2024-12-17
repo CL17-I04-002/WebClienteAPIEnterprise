@@ -11,5 +11,5 @@ import java.util.List;
 public class CustomResponse {
     private int statusCode;
     private String message;
-    private List<?> lstValue;
+    private Object lstValue;
 }

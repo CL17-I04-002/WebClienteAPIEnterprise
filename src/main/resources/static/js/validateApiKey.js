@@ -44,6 +44,7 @@ function loadScript(scriptUrl) {
 
 
 document.addEventListener("DOMContentLoaded", function () {
+
     // Seleccionar todos los enlaces dentro del menú
     const menuLinks = document.querySelectorAll(".sub-menu a");
 
@@ -53,6 +54,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const apiKey = sessionStorage.getItem("apiKey"); // Recuperar la API Key desde sessionStorage
 
             if (!apiKey) {
+                console.log("API KEY no encontrada")
                 // Prevenir la navegación
                 event.preventDefault();
 
@@ -78,6 +80,8 @@ document.addEventListener("DOMContentLoaded", function () {
                         alert("Por favor, ingresa una API Key válida.");
                     }
                 }, { once: true });*/
+            } else{
+                console.log("API KEY encontrada")
             }
         });
     });

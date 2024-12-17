@@ -31,9 +31,9 @@
         <div id="transactor-link" class="list-group list-group-flush">
             <!--<a id="submenu-transactor" class="list-group-item list-group-item-action list-group-item-light p-3 open-modal-transactor submenu">Transactor</a>-->
             <div class="sub-menu">
-                <a th:href="@{/enterprise}" data-redirect-url="/enterprise"
+                <a data-redirect-url="/enterprise"
                    class="list-group-item list-group-item-action list-group-item-light p-3"
-                   onclick="setRedirectUrl(this)">Enterprise</a>
+                   onclick="getApiKey(this.getAttribute('data-redirect-url'));">Enterprise</a>
                 <a th:href="@{/transactorSecurity}" class="list-group-item list-group-item-action list-group-item-light p-3">Transactor Security</a>
                 <a th:href="@{/resetPairKey}" class="list-group-item list-group-item-action list-group-item-light p-3">Resetear par de llaves</a>
                 <a th:href="@{/crearApiKey}" class="list-group-item list-group-item-action list-group-item-light p-3">Crear API Key</a>
@@ -98,7 +98,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form method="POST" th:action="@{/confirmApiKey}" th:object="${apiKeyValidate}" id="apiKeyForm">
+                    <!--<form method="POST" th:action="@{/confirmApiKey}" th:object="${apiKeyValidate}" id="apiKeyForm">
                         <input type="hidden" name="redirectUrl" id="redirectUrl" />
                         <div class="modal-body">
                             <p>Por favor ingrese API Key</p>
@@ -108,7 +108,7 @@
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                             <button type="submit" class="btn btn-primary" name="id">Enviar</button>
                         </div>
-                    </form>
+                    </form>-->
                 </div>
             </div>
         </div>
@@ -127,10 +127,10 @@
 <!--<script th:src="@{/js/scripts.js}"></script>-->
 <!--<script th:src="@{/js/ModalApiTransactor.js}"></script>-->
 <!--<script th:src="@{/js/Submenu.js}"></script> -->
-<script th:src="@{/js/validateApiKey.js}"></script>
+<!--<script th:src="@{/js/validateApiKey.js}"></script>-->
 <script th:src="@{/js/slideToggle.js}"></script>
-<script th:src="@{/js/redirectUrl.js}"></script>
-<script th:src="@{/js/storeApiKey.js}"></script>
+<!--<script th:src="@{/js/redirectUrl.js}"></script>-->
+<script th:src="@{/js/apiKeyInterceptor.js}"></script>
 
 <!--OTRO SCRIPTS PARA PAGINAS-->
 <script>
