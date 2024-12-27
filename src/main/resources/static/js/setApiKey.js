@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const apiKey = sessionStorage.getItem('apiKey');
     if (apiKey) {
+        console.log("Valor de API KEY: " + apiKey);
         const hiddenApiKeyField = document.getElementById('hiddenApiKey');
         if (hiddenApiKeyField) {
             hiddenApiKeyField.value = apiKey;

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{navbar}">
+<head th:replace="navbar :: head">
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div class="container py-3" layout:fragment="page-content">
+  <div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+      <div>
+        <i class="fa fa-undo" aria-hidden="true"></i>
+      </div>
+      <h1 class="text-center">Customer Registry</h1>
+      <div th:if="${param.apiKey}">
+        <div class="alert alert-info">
+          <span>Registro creado</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <form th:action="@{/crearCustomer}" method="post" th:object="${customer}" id="createCustomer">
+          <div class="form-group">
+            <input type="hidden" name="apiKey" value="" id="hiddenApiKey">
+            <input type="hidden" th:field="${customer.id}" />
+          </div>
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" th:field="${customer.name}" class="form-control" id="name"
+                   th:value="${customer.id != null ? customer.name : ''}">
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" th:field="${customer.lastName}" class="form-control" id="lastName"
+                   th:value="${customer.id != null ? customer.lastName : ''}">
+          </div>
+          <div class="form-group">
+            <label>Enterprise</label>
+            <input type="text" th:field="${customer.enterprise.name}" class="form-control" id="enterprise"
+                   th:value="${customer.enterprise != null && customer.id != null ? customer.enterprise.name : ''}">
+            <button>...</button>
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" th:field="${customer.email}" class="form-control" id="email"
+                   th:value="${customer.id != null ? customer.email : ''}">
+          </div>
+          <div class="form-group">
+            <label>Phone</label>
+            <input type="number" th:field="${customer.phone}" class="form-control" id="phone"
+                   th:value="${customer.id != null ? customer.phone : ''}">
+          </div>
+          <div class="form-group">
+            <label>Address</label>
+            <input type="text" th:field="${customer.address}" class="form-control" id="address"
+                   th:value="${customer.id != null ? customer.address : ''}">
+          </div>
+          <div class="d-flex justify-content-between py-2">
+            <input type="submit" class="btn btn-primary btn-validate col-sm-2 col-md-4 col-lg-4 col-xl-4 mx-2" value="Save" />
+            <button class="btn btn-danger col-sm-2 col-md4 col-lg-4 col-xl-4 mx-2">Limpiar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+<script th:src="@{/js/apiKeyInterceptor.js}"></script>
+<script th:src="@{/js/setApiKey.js}"></script>
+
+</body>
+</html>

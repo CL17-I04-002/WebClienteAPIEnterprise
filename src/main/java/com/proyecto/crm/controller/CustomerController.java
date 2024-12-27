@@ -1,6 +1,7 @@
 package com.proyecto.crm.controller;
 
 import com.proyecto.crm.entity.Customer;
+import com.proyecto.crm.entity.Enterprise;
 import com.proyecto.crm.response.CustomResponse;
 import com.proyecto.crm.services.interfaces.IServiceCustomer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,19 +25,21 @@ public class CustomerController {
                               @RequestParam(value = "customerId", required = false) Long customerId,
                               Model model){
         CustomResponse customResponse = new CustomResponse();
+        Enterprise enterprise = new Enterprise();
         Customer customer = new Customer();
         String apiKeyToUse = (apiKey != null) ? apiKey :
                              (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")
                              ? authorizationHeader.substring(7) : null);
         if(apiKeyToUse != null && customerId != null){
-            customResponse = serviceCustomer.getCustomer(customerId, apiKey);
+            customResponse = serviceCustomer.getCustomer(customerId, apiKeyToUse);
         } else if (apiKeyToUse != null){
-            customResponse = serviceCustomer.getCustomer(null, apiKey);
+            customResponse = serviceCustomer.getCustomer(null, apiKeyToUse);
         }
         if(customResponse.getStatusCode() == 200 && customerId != null){
             customer = (Customer) customResponse.getLstValue();
             model.addAttribute("customer", customer);
         } else if(customResponse.getStatusCode() == 200){
+            customer.setEnterprise(enterprise);
             model.addAttribute("customer", customer);
         }
         return "crearCustomer";
@@ -95,7 +98,7 @@ public class CustomerController {
                 (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")
                         ? authorizationHeader.substring(7) : null);
         if(apiKeyToUse != null){
-            customResponse = serviceCustomer.getCustomer(null, apiKey);
+            customResponse = serviceCustomer.getCustomer(null, apiKeyToUse);
             model.addAttribute("lstCustomer", customResponse.getLstValue());
         }else{
             return "/customer";

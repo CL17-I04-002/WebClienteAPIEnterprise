@@ -59,9 +59,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function getApiKey(url){
         const apiKey = sessionStorage.getItem("apiKey");
-        console.log("URL a apuntar: " + url);
+        console.log("Evento onclick disparado para la URL: " + url);
 
         if(apiKey != null){
+            console.log("API Key encontrada: " + apiKey);
             console.log("Se envió la petición");
             fetch(url, {
                 headers: {
@@ -75,11 +76,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     return response.text();
                 } else{
                     throw new Error("Network response was not ok");
+                    console.error(`Error: ${response.status} ${response.statusText}`);
                 }
             })
             .then(html => {
                         // Actualizamos la URL del navegador
-                        window.history.pushState({}, '', '/enterprise');
+                        window.history.pushState({}, '', url);
 
                         // Una vez obtenemos el HTML renderizado del backend, inyectamos el contenido
                         document.open();
