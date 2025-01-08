@@ -37,9 +37,13 @@
           </div>
           <div class="form-group">
             <label>Enterprise</label>
-            <input type="text" th:field="${customer.enterprise.name}" class="form-control" id="enterprise"
+
+            <input type="hidden" th:field="${customer.enterprise.id}" name="enterpriseId" id="enterpriseId"
+                                th:value="${customer.enterprise != null && customer.id != null ? customer.enterprise.id : ''}">
+
+            <input type="text" th:field="${customer.enterprise.name}" class="form-control" id="enterpriseName"
                    th:value="${customer.enterprise != null && customer.id != null ? customer.enterprise.name : ''}">
-            <button>...</button>
+            <button type="button" class="btn btn-primary" onclick="openModal()">...</button>
           </div>
           <div class="form-group">
             <label>Email</label>
@@ -65,8 +69,53 @@
     </div>
   </div>
 
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="enterpriseModal" tabindex="-1" aria-labelledby="enterpriseModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="enterpriseModalLabel">Select an Enterprise</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="table-responsive">
+            <table class="table table-striped table-hover">
+              <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Action</th>
+              </tr>
+              </thead>
+              <tbody>
+              <!-- Dynamically populate enterprises -->
+              <tr th:each="enterprise : ${lstEnterprise}">
+                <td th:text="${enterprise.id}"></td>
+                <td th:text="${enterprise.name}"></td>
+                <td>
+                  <button class="btn btn-primary btn-sm select-enterprise-btn"
+                          th:data-id="${enterprise.id}"
+                          th:data-name="${enterprise.name}"
+                          data-bs-dismiss="modal" onclick="selectEnterprise(this)">Select</button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 <script th:src="@{/js/apiKeyInterceptor.js}"></script>
 <script th:src="@{/js/setApiKey.js}"></script>
+<script th:src="@{/js/modalEnterprise.js}"></script>
+<script th:src="@{/js/setEnterpriseByModal.js}"></script>
 
 </body>
 </html>

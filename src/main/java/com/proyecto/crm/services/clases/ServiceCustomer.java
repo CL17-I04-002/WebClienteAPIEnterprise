@@ -59,7 +59,7 @@ public class ServiceCustomer implements IServiceCustomer {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("X-API-KEY", apiKey);
-        HttpEntity<String> request = new HttpEntity<>(apiKey, headers);
+        HttpEntity<Customer> request = new HttpEntity<>(customer, headers);
         try{
             ResponseEntity<Customer> response = responseServer.setParameters("customer", HttpMethod.POST, request, String.class);
             if(response.getStatusCode().is2xxSuccessful()){
