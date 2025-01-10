@@ -83,7 +83,7 @@ public class CustomerController {
     @GetMapping("/deleteCustomer")
     public String deleteCustomer(@RequestHeader(value = "Authorization", required = false) String authorizationHeader,
                                  @RequestParam(value = "apiKey", required = false) String apiKey,
-                                 @RequestParam(value = "enterpriseId", required = false) Long enterpriseId){
+                                 @RequestParam(value = "customerId", required = false) Long enterpriseId){
         CustomResponse customResponse = new CustomResponse();
         Customer customer = new Customer();
         customer.setId(enterpriseId);
@@ -91,7 +91,7 @@ public class CustomerController {
                 (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")
                         ? authorizationHeader.substring(7) : null);
         if(apiKeyToUse != null && enterpriseId != null){
-            customResponse = serviceCustomer.deleteCustomer(apiKey, customer);
+            customResponse = serviceCustomer.deleteCustomer(apiKeyToUse, customer);
         }
         if(customResponse.getStatusCode() == 200){
 

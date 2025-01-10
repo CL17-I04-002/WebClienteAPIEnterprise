@@ -1,10 +1,10 @@
 package com.proyecto.crm.services.clases;
 
-import com.proyecto.crm.entity.Customer;
+import com.proyecto.crm.entity.CustomerTask;
 import com.proyecto.crm.response.CustomExceptionResponse;
 import com.proyecto.crm.response.CustomResponse;
 import com.proyecto.crm.response.ResponseServer;
-import com.proyecto.crm.services.interfaces.IServiceCustomer;
+import com.proyecto.crm.services.interfaces.IServiceCustomerTask;
 import jakarta.annotation.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -17,27 +17,26 @@ import java.util.Collections;
 import java.util.List;
 
 @Service
-public class ServiceCustomer implements IServiceCustomer {
+public class ServiceCustomerTask implements IServiceCustomerTask {
     private final ResponseServer responseServer;
 
     @Autowired
-    public ServiceCustomer(ResponseServer responseServer) {
+    public ServiceCustomerTask(ResponseServer responseServer) {
         this.responseServer = responseServer;
     }
 
-
     @Override
-    public CustomResponse getCustomer(@Nullable Long id, String apiKey) {
+    public CustomResponse getCustomerTask(@Nullable Long id, String apiKey) {
         CustomResponse customResponse = new CustomResponse();
         HttpHeaders headers = new HttpHeaders();
         String url = "";
-        if (id != null) url = "customer?id=" + id;
-        else url = "customer";
+        if (id != null) url = "customerTask?id=" + id;
+        else url = "customerTask";
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("X-API-KEY", apiKey);
         HttpEntity<String> request = new HttpEntity<>(apiKey, headers);
         try{
-            ResponseEntity<Object> response = responseServer.setParameters(url, HttpMethod.GET, request, (id != null) ? Customer.class : new ParameterizedTypeReference<List<Customer>>() {});
+            ResponseEntity<Object> response = responseServer.setParameters(url, HttpMethod.GET, request, (id != null) ? CustomerTask.class : new ParameterizedTypeReference<List<CustomerTask>>() {});
             if(response.getStatusCode().is2xxSuccessful()){
                 customResponse.setStatusCode(200);
                 customResponse.setMessage("OK");
@@ -54,17 +53,17 @@ public class ServiceCustomer implements IServiceCustomer {
     }
 
     @Override
-    public CustomResponse createCustomer(String apiKey, Customer customer) {
+    public CustomResponse createCustomerTask(String apiKey, CustomerTask customerTask) {
         CustomResponse customResponse = new CustomResponse();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("X-API-KEY", apiKey);
-        HttpEntity<Customer> request = new HttpEntity<>(customer, headers);
+        HttpEntity<CustomerTask> request = new HttpEntity<>(customerTask, headers);
         try{
-            ResponseEntity<Customer> response = responseServer.setParameters("customer", HttpMethod.POST, request, String.class);
+            ResponseEntity<CustomerTask> response = responseServer.setParameters("customerTask", HttpMethod.POST, request, String.class);
             if(response.getStatusCode().is2xxSuccessful()){
                 customResponse.setStatusCode(200);
-                customResponse.setMessage("Customer was created");
+                customResponse.setMessage("CustomerTask was created");
                 customResponse.setLstValue(Collections.emptyList());
             }
             return customResponse;
@@ -78,18 +77,18 @@ public class ServiceCustomer implements IServiceCustomer {
     }
 
     @Override
-    public CustomResponse updateCustomer(String apiKey, Customer customer) {
+    public CustomResponse updateCustomerTask(String apiKey, CustomerTask customerTask) {
         CustomResponse customResponse = new CustomResponse();
-        String url = "customer/" + customer.getId();
         HttpHeaders headers = new HttpHeaders();
+        String url = "customerTask/" + customerTask.getId().toString();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("X-API-KEY", apiKey);
-        HttpEntity<Customer> request = new HttpEntity<>(customer, headers);
+        HttpEntity<CustomerTask> request = new HttpEntity<>(customerTask, headers);
         try{
-            ResponseEntity<Customer> response = responseServer.setParameters(url, HttpMethod.PUT, request, String.class);
+            ResponseEntity<CustomerTask> response = responseServer.setParameters(url, HttpMethod.PUT, request, String.class);
             if(response.getStatusCode().is2xxSuccessful()){
                 customResponse.setStatusCode(200);
-                customResponse.setMessage("Customer was updated");
+                customResponse.setMessage("customerTask was updated");
                 customResponse.setLstValue(Collections.emptyList());
             }
             return customResponse;
@@ -103,18 +102,18 @@ public class ServiceCustomer implements IServiceCustomer {
     }
 
     @Override
-    public CustomResponse deleteCustomer(String apiKey, Customer customer) {
+    public CustomResponse deleteCustomTask(String apiKey, CustomerTask customerTask) {
         CustomResponse customResponse = new CustomResponse();
-        String url = "customer/" + customer.getId();
         HttpHeaders headers = new HttpHeaders();
+        String url = "customerTask/" + customerTask.getId().toString();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("X-API-KEY", apiKey);
-        HttpEntity<Customer> request = new HttpEntity<>(customer, headers);
+        HttpEntity<CustomerTask> request = new HttpEntity<>(customerTask, headers);
         try{
-            ResponseEntity<Customer> response = responseServer.setParameters(url, HttpMethod.DELETE, request, String.class);
+            ResponseEntity<CustomerTask> response = responseServer.setParameters(url, HttpMethod.DELETE, request, String.class);
             if(response.getStatusCode().is2xxSuccessful()){
                 customResponse.setStatusCode(200);
-                customResponse.setMessage("Customer was deleted");
+                customResponse.setMessage("customerTask was deleted");
                 customResponse.setLstValue(Collections.emptyList());
             }
             return customResponse;

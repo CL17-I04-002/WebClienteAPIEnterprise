@@ -50,7 +50,7 @@
              style="color: blue; cursor: pointer;"
              onclick="getApiKey(this.getAttribute('data-redirect-url'));">
           </i>
-          <i th:attr="data-redirect-url='/eliminarCustomer?customerId=' + ${customer.id}"
+          <i th:attr="data-redirect-url='/deleteCustomer?customerId=' + ${customer.id}"
              class="fa-solid fa-trash-can"
              style="color: red; cursor: pointer;"
              onclick="getApiKey(this.getAttribute('data-redirect-url'));">

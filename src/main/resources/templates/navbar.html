@@ -37,7 +37,9 @@
                 <a data-redirect-url="/customer"
                    class="list-group-item list-group-item-action list-group-item-light p-3"
                    onclick="getApiKey(this.getAttribute('data-redirect-url'));">Customer</a>
-                <a th:href="@{/resetPairKey}" class="list-group-item list-group-item-action list-group-item-light p-3">Resetear par de llaves</a>
+                <a data-redirect-url="/customerTask"
+                   class="list-group-item list-group-item-action list-group-item-light p-3"
+                   onclick="getApiKey(this.getAttribute('data-redirect-url'));">Customer Task</a>
                 <a th:href="@{/crearApiKey}" class="list-group-item list-group-item-action list-group-item-light p-3">Crear API Key</a>
                 <a th:href="@{/transaccionEstado}" class="list-group-item list-group-item-action list-group-item-light p-3">Transaccion Estado</a>
                 <a th:href="@{/transaccionTipo}" class="list-group-item list-group-item-action list-group-item-light p-3">Transaccion Tipo</a>
