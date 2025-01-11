@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{navbar}">
+<head th:replace="navbar :: head">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div class="container py-3" layout:fragment="page-content">
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+            <div>
+                <i class="fa fa-undo" aria-hidden="true"></i>
+            </div>
+            <h1 class="text-center">Customer Registry</h1>
+            <div th:if="${param.apiKey}">
+                <div class="alert alert-info">
+                    <span>Registro creado</span>
+                </div>
+            </div>
+            <div class="card-body">
+                <form th:action="@{/crearCustomerTask}" method="post" th:object="${customerTask}" id="createCustomerTask">
+                    <div class="form-group">
+                        <input type="hidden" name="apiKey" value="" id="hiddenApiKey">
+                        <input type="hidden" th:field="${customerTask.id}" />
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <input type="text" th:field="${customerTask.description}" class="form-control" id="name"
+                               th:value="${customerTask.id != null ? customerTask.description : ''}">
+                    </div>
+                    <div class="form-group">
+                        <label>Limit Date</label>
+                        <input type="date" th:field="${customerTask.limitDate}" class="form-control" id="lastName"
+                               th:value="${customerTask.id != null ? customerTask.limitDate : ''}">
+                    </div>
+                    <div class="form-group">
+                        <label>State</label>
+                        <input type="text" th:field="${customerTask.state}" class="form-control" id="email"
+                               th:value="${customerTask.id != null ? customerTask.state : ''}">
+                    </div>
+                    <div class="form-group">
+                        <label>Customer</label>
+
+                        <input type="hidden" th:field="${customerTask.customer.id}" name="enterpriseId" id="customerId"
+                               th:value="${customerTask.customer != null && customerTask.id != null ? customerTask.customer.id : ''}">
+
+                        <input type="text" th:field="${customerTask.customer.name}" class="form-control" id="customerName"
+                               th:value="${customerTask.customer != null && customerTask.id != null ? customerTask.customer.name : ''}">
+                        <button type="button" class="btn btn-primary" onclick="openModal()">...</button>
+                    </div>
+
+                    <div class="d-flex justify-content-between py-2">
+                        <input type="submit" class="btn btn-primary btn-validate col-sm-2 col-md-4 col-lg-4 col-xl-4 mx-2" value="Save" />
+                        <button class="btn btn-danger col-sm-2 col-md4 col-lg-4 col-xl-4 mx-2">Limpiar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="customerModal" tabindex="-1" aria-labelledby="customerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="enterpriseModalLabel">Select a Customer</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!-- Dynamically populate enterprises -->
+                            <tr th:each="customer : ${lstCustomer}">
+                                <td th:text="${customer.id}"></td>
+                                <td th:text="${customer.name}"></td>
+                                <td>
+                                    <button class="btn btn-primary btn-sm select-enterprise-btn"
+                                            th:data-id="${customer.id}"
+                                            th:data-name="${customer.name}"
+                                            data-bs-dismiss="modal" onclick="selectEnterprise(this)">Select</button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script th:src="@{/js/apiKeyInterceptor.js}"></script>
+<script th:src="@{/js/setApiKey.js}"></script>
+<script th:src="@{/js/modalCustomer.js}"></script>
+<script th:src="@{/js/setCustomerByModal.js}"></script>
+</body>
+</html>
