@@ -21,6 +21,9 @@
             <span>AP Key Valida</span>
           </div>
         </div>
+        <div th:if="${param.apiKey == null}">
+          <script>cleanApiKey();</script>
+        </div>
         <div th:if="${param.error}">
           <div class="alert alert-error">
             <span>API Key Invalida</span>
@@ -44,5 +47,6 @@
 
 
 <script th:src="@{/js/storeApiKey.js}"></script>
+<script th:src="@{/js/cleanApiKey.js}"></script>
 </body>
 </html>

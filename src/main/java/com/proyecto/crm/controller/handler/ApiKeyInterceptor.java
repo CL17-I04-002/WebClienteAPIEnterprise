@@ -35,8 +35,7 @@ public class ApiKeyInterceptor implements HandlerInterceptor {
         if (request.getRequestURI().equals("/index")) {
             return true;  // No redirigir, ya estamos en la página de creación de la API Key
         }
-
-        //response.sendRedirect("/crearApiKey");
+        response.sendRedirect("/index");
         return false;
     }
 }
